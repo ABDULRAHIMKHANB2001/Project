@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+  background-image: url("logo/img.jpg");
+  background-size: cover;
+  background-position: fill;
+  background-repeat: no-repeat;
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  position: relative;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.logo {
+  width: 100px;
+  height: auto;
+  position: absolute;
+  top: 0px;
+  left: 10px;
+  margin: 6px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.person-logo {
+  width: 150px;
+  height: auto;
+  margin-bottom: 50px;
+}
+
+h1 {
+  text-align: center;
+  color: black;
+  margin-top: 50px;
+  margin-left: 150px;
+  margin-bottom: 0;
+}
+
+.form-input {
+  margin-left: 10px;
+  flex: 1;
+  padding: 10px 30px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.create-button {
+  padding: 10px 20px;
+  margin-top: 0.8em;
+  padding: 10px 50px;
+  background-color: #fff;
+  color: #070707;
+  border: none;
+  border-radius: 25px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.create-button:hover {
+  background-color: #f0f0f0;
+}
+.toggle-switch {
+           position: relative;
+           display: inline-block;
+           width: 50px;
+           height: 26px;
+}
+
+        .toggle-switch input {
+              display: none;
+        }
+
+        .slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: #ccc;
+          transition: 0.4s;
+          border-radius: 34px;
+          width: 100%;
+          height: 100%;
+          border-radius: 13px;
+        }
+
+        .slider:before {
+          position: absolute;
+          content: "";
+          height: 18px;
+          width: 18px;
+          left: 4px;
+          bottom: 4px;
+          background-color: white;
+          transition: 0.4s;
+          border-radius: 50%;
+        }
+
+        input:checked + .slider {
+          background-color: #2196F3;
+        }
+
+        input:checked + .slider:before {
+          transform: translateX(26px);
+        }
+
+        .toggle-switch label {
+          color: #333;
+          font-weight: bold;
+          display: flex;
+          align-items: center;
+          margin-bottom: 10px;
+        }
+        .toggle-container {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 10px;
+}
+
+        .toggle-label {
+          display: inline-block;
+          margin-right: 10px;
+          margin-bottom: 0;
+          color: #000; 
+        }
+
+.go-back {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  background-color: #fff;
+  color: #070707;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.go-back:hover {
+  background-color: #f0f0f0;
+}
+    /* Styles for popup */
+    .popup-container {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    .popup-content {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    .popup-message {
+      font-family: 'Poppins', Arial, sans-serif;
+      color: #000;
+      margin-bottom: 10px;
+    }
+
+    .popup-button {
+      padding: 10px 20px;
+      background-color: #2196F3;
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      font-family: 'Poppins', Arial, sans-serif;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    .popup-button:hover {
+      background-color: #0c72c1;
+    }
+
+  </style>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <div class="sidebar">    <img src="logo/logo.png" alt="Company Logo" class="logo">
+</div>
+  <div class="container">
+    <a href="main.html" class="go-back">Back</a>
+    <h1>Update User</h1>
+    <div class="container" style="display: flex;">
+
+    
+      <div class="form-container">
+        <div class="" style="display: flex;">
+          <img src="logo/update.png" alt="Person Logo" class="person-logo">
+          <div class="">
+            <div style="display: flex; align-items: center;">
+              <input type="text" class="form-input" placeholder="User ID" id="userIdInput">
+            </div>
+      
+            <div style="display: flex; align-items: center;">
+              <input type="text" class="form-input" placeholder="Name" id="nameInput">
+            </div>
+            
+            <div style="display: flex; align-items: center; justify-content: center;">
+              <label for="accessInput" class="toggle-label">Access</label>
+              <label class="toggle-switch">
+                <input type="checkbox" id="accessInput">
+                <span class="slider"></span>
+              </label>
+            </div>
+            
+            <button class="create-button" onclick="updateUser()">Update</button>
+          </div>
+        </div>
+      </div>
+      
+  </div>
+  </div>
+  </div>
+
+  <script>
+    const updateUser = async () => {
+      const userIdInput = document.querySelector('#userIdInput');
+      const nameInput = document.querySelector('#nameInput');
+      const accessInput = document.querySelector('#accessInput');
+
+      const userId = userIdInput.value;
+      const name = nameInput.value;
+      const access = accessInput.checked;
+      console.log(access)
+
+      try {
+        const response = await axios.patch(`/people/${userId}`, { name, access });
+        console.log(response.data); // Handle success response
+        createPopupMessage('User updated Successfully...');
+      } catch (error) {
+        console.error(error); // Handle error response
+      }
+    };
+
+    function createPopupMessage(message) {
+
+      var popupContainer = document.createElement('div');
+      popupContainer.className = 'popup-container';
+
+
+      var popupContent = document.createElement('div');
+      popupContent.className = 'popup-content';
+
+      var messageElement = document.createElement('p');
+      messageElement.textContent = message;
+      messageElement.className = 'popup-message';
+
+      var okButton = document.createElement('button');
+      okButton.textContent = 'OK';
+      okButton.className = 'popup-button';
+
+      okButton.addEventListener('click', function () {
+        document.body.removeChild(popupContainer);
+      });
+
+      popupContent.appendChild(messageElement);
+      popupContent.appendChild(okButton);
+
+      popupContainer.appendChild(popupContent);
+
+      document.body.appendChild(popupContainer);
+    }
+
+
+
+  </script>
+  
+</body>
+</html>

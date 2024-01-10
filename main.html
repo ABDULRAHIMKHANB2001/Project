@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      background-image: url("logo/img.jpg");
+      background-size: cover;
+      background-position: fill;
+      background-repeat: no-repeat;
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      position: relative; 
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      border-radius: 5px;
+    }
+
+    @font-face {
+           font-family: 'Poppins';
+           src: url('Poppins-Bold.ttf') format('truetype');
+
+        }
+        @font-face {
+           font-family: 'Light';
+           src: url('Poppins-Light.ttf') format('truetype');
+
+        }
+
+
+    .options {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      margin-left: 100px; 
+      border-radius: 5px;
+    }
+
+    .option {
+      flex: 1;
+      margin: 0 10px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .logo {
+      width: 100px;
+      margin-bottom: 10px;
+    }
+
+    .h1 {
+      text-align: center;
+      color: #fff;
+      position: absolute; 
+      left: 0; 
+      top: 0; 
+      margin: 10px; 
+    }
+
+    .sign-out {
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 10px;
+    padding: 10px 20px; 
+    background-color: #fff; 
+    color: #070707;
+    border: none;
+    border: 2px solid rgb(220, 220, 220);
+    border-radius: 5px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    }
+
+    .logo-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 10px;
+    }
+
+    .logo {
+      width: 150px;
+      height: auto;
+    }
+
+    .sign-out:hover {
+      background-color: #d44545;
+    }
+
+    a {
+      text-decoration: none;
+      color: #fff;
+    }
+    
+
+    .button {
+      display: inline-block;
+      font-family: 'Poppins', Arial, sans-serif;
+      padding: 10px 20px;
+      background-color: #fff;
+      color: #070707;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    .button:hover {
+      background-color: #6caee5;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo-container">
+      <img src="logo/logo.png" alt="Company Logo" class="logo">
+    </div>    
+    <div class="options">
+      <div class="option">
+        <img src="logo/create.png" alt="Create User Logo" class="logo">
+        <a href="3create.html" class="button">Create User</a>
+      </div>
+      <div class="option">
+        <img src="logo/delete.png" alt="Delete User Logo" class="logo">
+        <a href="4remove.html" class="button">Remove User</a>
+      </div>
+      
+      <div class="option">
+        <img src="logo/data.png" alt="Datalog Logo" class="logo">
+        <a href="https://docs.google.com/spreadsheets/d/1-ZYC-Mgsh6HbAZJ4S3mfwGMagztiiAc_CcynmcO6A48/edit#gid=0" class="button">Datalog</a>
+      </div>
+      <div class="option">
+        <img src="logo/database.png" alt="Datalog Logo" class="logo">
+        <a href="db.html" class="button">Database</a>
+      </div>
+      <div class="option">
+        <img src="logo/update.png" alt="Update logo" class="logo">
+        <a href="update.html" class="button">Update User</a>
+      </div>
+    </div>
+    <a href="index.html" class="sign-out">Sign Out</a>
+  </div>
+</body>
+</html>

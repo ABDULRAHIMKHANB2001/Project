@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Capture and Send Images as Zip</title>
+</head>
+<body>
+    <h1>Capture and Send Images as Zip</h1>
+    <button id="captureButton">Capture Images</button>
+    <progress id="progressBar" value="0" max="100"></progress>
+    <div id="cameraPreview"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
+    <script>
+        var captureButton = document.getElementById('captureButton');
+        var progressBar = document.getElementById('progressBar');
+        var cameraPreview = document.getElementById('cameraPreview');
+        var imageCounter = 0;
+        var totalImages = 100;
+        var zip = new JSZip();
+        var video;
+
+        function captureImage() {
+            var canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            var context = canvas.getContext('2d');
+
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            var image = canvas.toDataURL('image/jpeg');
+            var imageName = 'image_' + (imageCounter + 1) + '.jpg';
+            zip.file(imageName, dataURItoBlob(image));
+
+            sendImage();
+        }
+
+        function sendImage() {
+            if (imageCounter < totalImages) {
+                imageCounter++;
+                progressBar.value = (imageCounter / totalImages) * 100;
+
+                if (imageCounter === totalImages) {
+                    zip.generateAsync({ type: 'blob' })
+                        .then(function (content) {
+                            var formData = new FormData();
+                            formData.append('zip', content, 'images.zip');
+
+                            fetch('/upload', {
+                                method: 'POST',
+                                body: formData
+                            })
+                                .then(function (response) {
+                                    if (response.ok) {
+                                        alert('Images captured and sent as a zip file successfully!');
+                                    } else {
+                                        alert('Error sending zip file: ' + response.status);
+                                    }
+                                })
+                                .catch(function (error) {
+                                    alert('Error sending zip file: ' + error.message);
+                                });
+                        })
+                        .catch(function (error) {
+                            alert('Error creating zip file: ' + error.message);
+                        });
+                } else {
+                    captureImage();
+                }
+            }
+        }
+
+        function startCapture() {
+            captureButton.disabled = true;
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function (stream) {
+                    video = document.createElement('video');
+                    video.srcObject = stream;
+                    video.autoplay = true;
+                    cameraPreview.appendChild(video);
+
+                    // Wait for the video frame to load
+                    video.addEventListener('loadeddata', function () {
+                        captureImage();
+                    });
+                })
+                .catch(function (error) {
+                    alert('Error accessing camera: ' + error.message);
+                });
+        }
+
+        function dataURItoBlob(dataURI) {
+            var byteString = atob(dataURI.split(',')[1]);
+            var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+            var ab = new ArrayBuffer(byteString.length);
+            var ia = new Uint8Array(ab);
+            for (var i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+            }
+            return new Blob([ab], { type: mimeString });
+        }
+
+        captureButton.addEventListener('click', startCapture);
+    </script>
+</body>
+</html>

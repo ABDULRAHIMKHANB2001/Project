@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-image: url('logo/img.jpg');
+      background-size: cover;
+      background-position: fill ;
+      background-repeat: no-repeat;
+      height: 200vh;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .logo {
+      width: 100px;
+      height: auto;
+      margin-left: 20px;
+    }
+
+    .go-back {
+      padding: 10px 20px;
+      background-color: #fff;
+      color: #070707;
+      border: none;
+      border-radius: 5px;
+      border: 2px solid rgb(220, 220, 220);
+      font-weight: bold;
+      text-decoration: none;
+      transition: background-color 0.3s;
+      margin-right: 20px;
+      margin-left: auto;
+    }
+
+    .go-back:hover {
+      background-color: #d44545;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 0;
+    }
+
+    .person-info {
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .person-info p {
+      margin: 0;
+    }
+
+    .person-info:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+  </style>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <div class="header">
+    <img src="logo/logo.png" alt="Company Logo" class="logo">
+    <a href="main.html" class="go-back">Go Back</a>
+  </div>
+
+  <div class="container">
+    <h1>User Information</h1>
+    <div id="userInfoContainer"></div>
+  </div>
+
+  <script>
+    const userInfoContainer = document.querySelector('#userInfoContainer');
+
+    const displayUserInfo = (data) => {
+      userInfoContainer.innerHTML = '';
+
+      data.forEach((person) => {
+        const personInfo = document.createElement('div');
+        personInfo.className = 'person-info';
+
+        const idElement = document.createElement('p');
+        idElement.textContent = `ID: ${person.id}`;
+
+        const nameElement = document.createElement('p');
+        nameElement.textContent = `Name: ${person.name}`;
+
+        const accessElement = document.createElement('p');
+        accessElement.textContent = `Access: ${person.access}`;
+
+        personInfo.appendChild(idElement);
+        personInfo.appendChild(nameElement);
+        personInfo.appendChild(accessElement);
+
+        userInfoContainer.appendChild(personInfo);
+      });
+    };
+
+    const fetchUserInfo = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/people');
+        const data = response.data;
+        displayUserInfo(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchUserInfo();
+  </script>
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create User</title>
+    <style>
+        body {
+          background-image: url("logo/img.jpg");
+          background-size: cover;
+          background-position: fill;
+          background-repeat: no-repeat;
+          font-family: Arial, sans-serif;
+          background-color: #f2f2f2;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+          margin: 0;
+          position: relative;
+        }
+
+        progress {
+          margin-top: .8em;
+          height: 1.5em;
+        }
+
+        .container {
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 20px;
+          margin-top: 20px;
+          border-radius: 5px;
+          text-align: center;
+        }
+
+        @font-face {
+           font-family: 'Poppins';
+           src: url('Poppins-Bold.ttf') format('truetype');
+        }
+
+        @font-face {
+           font-family: 'Light';
+           src: url('Poppins-Light.ttf') format('truetype');
+        }
+
+        .logo {
+          width: 150px;
+          height: auto;
+          position: absolute;
+          top: 10px;
+          left: 10px;
+          margin: 6px;
+        }
+
+        .form-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-top: 50px;
+        }
+
+        .person-logo {
+          width: 200px;
+          height: auto;
+          margin-top: 10px;
+          margin-right: 20px;
+        }
+
+        h1 {
+          text-align: center;
+          font-family: 'Poppins', Arial, sans-serif;
+          color: rgb(12, 11, 11);
+          margin-top: 50px;
+          margin-left: 0px;
+        }
+
+        .form-input {
+          flex: 1;
+          font-family: 'Light', Arial, sans-serif;
+          padding: 10px 100px;
+          border: 1px solid #ccc;
+          margin-bottom: 10px;
+          border-radius: 25px;
+        }
+
+        .create-button {
+          padding: 10px 50px;
+          background-color: #fff;
+          color: #070505;
+          border: none;
+          border-radius: 25px;
+          margin-top: 20px;
+          margin-bottom: 0;
+          margin-left: 10px;
+          font-family: 'Poppins', Arial, sans-serif;
+          text-decoration: none;
+          transition: background-color 0.3s;
+        }
+
+        .create-button:hover {
+          background-color: #38c77b;
+        }
+
+        .go-back {
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          padding: 5px 10px;
+          background-color: #fff;
+          border: 2px solid rgb(220, 220, 220);
+          color: #070707;
+          border: none;
+          border-radius: 5px;
+          font-weight: bold;
+          text-decoration: none;
+          transition: background-color 0.3s;
+        }
+
+        .go-back img {
+          width: 20px;
+          height: 20px;
+        }
+
+        .go-back:hover {
+          background-color: #d44545;
+        }
+
+        .toggle-switch {
+           position: relative;
+           display: inline-block;
+           width: 50px;
+           height: 26px;
+        }
+
+        .toggle-switch input {
+              display: none;
+        }
+
+        .slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: #ccc;
+          transition: 0.4s;
+          border-radius: 34px;
+          width: 100%;
+          height: 100%;
+          border-radius: 13px;
+        }
+
+        .slider:before {
+          position: absolute;
+          content: "";
+          height: 18px;
+          width: 18px;
+          left: 4px;
+          bottom: 4px;
+          background-color: white;
+          transition: 0.4s;
+          border-radius: 50%;
+        }
+
+        .toggle-switch label {
+          color: #333;
+          font-weight: bold;
+          display: flex;
+          align-items: center;
+          margin-bottom: 10px;
+        }
+
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        input:checked + .slider {
+          background-color: green;
+        }
+
+        input:checked + .slider:before {
+          transform: translateX(26px);
+        }
+
+        .toggle-label {
+          display: inline-block;
+          margin-right: 10px;
+          margin-bottom: 0;
+          color: #000;
+       }
+
+       .green {
+            background-color: green;
+        }
+
+        .logo {
+          position: absolute;
+          width: 100px;
+          height: auto;
+          top: 10px;
+          left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <img src="logo/create.png" alt="Logo" class="person-logo">
+    <div class="form-container">
+        <h1>Create User</h1>
+        <img src="logo/logo.png" alt="Logo" class="logo">
+        <input class="form-input" type="text" id="nameInput" placeholder="Name">
+        <input class="form-input" type="text" id="idInput" placeholder="ID">
+        <div class="toggle-container">
+          <label for="accessInput" class="toggle-label">Access</label>
+          <label class="toggle-switch">
+            <input type="checkbox" id="accessInput">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <button class="create-button" id="captureButton">Capture Images</button>
+        <progress id="progressBar" value="0" max="100" ></progress>
+        <a class="go-back" href="main.html">Go Back</a>
+        <div id="cameraPreview"></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
+    <script>
+        var captureButton = document.getElementById('captureButton');
+        var progressBar = document.getElementById('progressBar');
+        var cameraPreview = document.getElementById('cameraPreview');
+        var nameInput = document.getElementById('nameInput');
+        var idInput = document.getElementById('idInput');
+        var accessInput = document.getElementById('accessInput');
+        var imageCounter = 0;
+        var totalImages = 100;
+        var zip = new JSZip();
+        var video;
+
+        function captureImage() {
+            setTimeout(() => {
+                var canvas = document.createElement('canvas');
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                var context = canvas.getContext('2d');
+
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                var image = canvas.toDataURL('image/jpeg');
+                var imageName = 'image_' + (imageCounter + 1) + '.jpg';
+                zip.file(imageName, dataURItoBlob(image));
+
+                sendImage();
+            }, 100); 
+        }
+
+        function sendImage() {
+            if (imageCounter < totalImages) {
+                imageCounter++;
+                progressBar.value = (imageCounter / totalImages) * 100;
+
+                // Add the 'green' class to the progressBar when images are being captured
+                progressBar.classList.add('green');
+
+                if (imageCounter === totalImages) {
+                    zip.generateAsync({ type: 'blob' })
+                        .then(function (content) {
+                            var formData = new FormData();
+                            formData.append('zip', content, 'images.zip');
+                            formData.append('name', nameInput.value);
+                            formData.append('id', idInput.value);
+                            formData.append('access', accessInput.checked);
+
+                            fetch('http://localhost:3000/people', {
+                                method: 'POST',
+                                body: formData
+                            })
+                                .then(function (response) {
+                                    if (response.ok) {
+                                        progressBar.style.display = 'none';
+                                        alert('Images captured successfully!');
+                                    } else {
+                                        alert('Error sending zip file: ' + response.status);
+                                    }
+                                })
+                                .catch(function (error) {
+                                    alert('Error sending zip file: ' + error.message);
+                                });
+                        })
+                        .catch(function (error) {
+                            alert('Error creating zip file: ' + error.message);
+                        });
+                } else {
+                    captureImage();
+                }
+            }
+        }
+
+        function startCapture() {
+            captureButton.disabled = true;
+            progressBar.style.display = 'block';
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function (stream) {
+                    video = document.createElement('video');
+                    video.srcObject = stream;
+                    video.autoplay = true;
+                    cameraPreview.appendChild(video);
+
+                    video.addEventListener('loadeddata', function () {
+                        captureImage();
+                    });
+                })
+                .catch(function (error) {
+                    alert('Error accessing camera: ' + error.message);
+                    captureButton.disabled = false;
+                });
+        }
+
+        function dataURItoBlob(dataURI) {
+            var byteString = atob(dataURI.split(',')[1]);
+            var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+            var ab = new ArrayBuffer(byteString.length);
+            var ia = new Uint8Array(ab);
+            for (var i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+            }
+            return new Blob([ab], { type: mimeString });
+        }
+
+        captureButton.addEventListener('click', startCapture);
+    </script>
+</body>
+</html>
